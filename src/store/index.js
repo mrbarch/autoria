@@ -1,15 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import transportTypes from "./transportTypes"
 import marks from "./marks"
-import bodyTypes from "./bodyTypes";
-import transportTypes from "./transportTypes";
+import models from "./models"
+import randomPhrases from "./phrases";
+import CarCatalogNew from "./carCatalogNew";
+import countryOfManufacturer from "./countryOfManufacturer";
+import search from "./search";
+import regions from "./regions";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
+        transportTypes,
         marks,
-        bodyTypes,
-        transportTypes
-    }
+        models,
+        randomPhrases,
+        CarCatalogNew,
+        countryOfManufacturer,
+        search,
+        regions
+    },
 })

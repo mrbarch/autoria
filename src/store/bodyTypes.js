@@ -4,19 +4,18 @@ import axios from "axios";
 
 Vue.use(Vuex)
 
-export default ({
+const bodyTypes = ({
     state: {
         bodyTypes: []
     },
     mutations: {
-        SET_BODY_TYPES_TO_VUEX: (state, bodyTypes) => {
-            state.bodyTypes = bodyTypes
+        SET_BODY_TYPES_TO_VUEX: (state, payload) => {
+            state.bodyTypes = payload
         }
     },
     actions: {
         GET_BODY_TYPES({commit}) {
-            return axios('https://developers.ria.com/auto/categories/1/bodystyles?api_key=NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH', {
-                method: 'GET',
+            axios.get('https://developers.ria.com/auto/categories/1/bodystyles?api_key=NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH', {
                 accept: 'application/json'
             })
                 .then((response) => {
@@ -31,3 +30,5 @@ export default ({
     },
     modules: {}
 })
+
+export default bodyTypes

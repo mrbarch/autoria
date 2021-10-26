@@ -1,0 +1,62 @@
+@font-face {
+  font-family: Arial-Regular;
+  src: local('Arial-Regular'),
+  url("../assets/fonts/Arial-Regular.ttf");
+}
+
+@font-face {
+  font-family: Arial-Bold;
+  src: local('Arial-Bold'),
+  url("../assets/fonts/Arial-Bold.ttf");
+}
+
+@font-face {
+  font-family: Arial-Italic;
+  src: local('Arial-Italic'),
+  url("../assets/fonts/Arial-Italic.ttf");
+}
+a {
+  color: #414042;
+}
+ul, li {
+  list-style-type: none;
+  text-decoration: none;
+}
+
+html,
+body {
+  font-family: Arial-Regular, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-size: var(--fontSize);
+  font-weight: 400;
+  line-height: 2rem;
+  color: #414042;
+  background: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: #414042;
+}
+
+.container {
+  width: 94rem;
+  margin: auto;
+}
+
+.blue {
+  color: #266799;
+}
+.red {
+  color: #DB5C4C;
+}
+.btn-blue-hover {
+  &:hover {
+    background-color: #ddf4fb;
+  }
+}
+button {
+  cursor: pointer;
+}

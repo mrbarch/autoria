@@ -6,22 +6,19 @@ Vue.use(Vuex)
 
 export default ({
     state: {
-        models: []
+        models: [],
     },
     mutations: {
-        SET_MODELS_TO_VUEX: (state, models) => {
-            state.models = models
-        }
+        SET_MODELS_TO_VUEX: (state, payload) => {
+            state.models = payload
+        },
     },
     actions: {
-        GET_MODELS({commit}) {
-            return axios('https://developers.ria.com/auto/categories/?api_key=NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH', {
-                method: 'GET',
+        async GET_MODELS({commit}, typeOfTransportToMark) {
+            const response = await axios.get(`/auto/categories/${typeOfTransportToMark.indexTypeOfTransport}/marks/${typeOfTransportToMark.indexMark}/models?api_key=NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH`, {
                 accept: 'application/json'
             })
-                .then((response) => {
-                    commit('SET_MODELS_TO_VUEX', response.data)
-                })
+            commit('SET_MODELS_TO_VUEX', response.data)
         }
     },
     getters: {

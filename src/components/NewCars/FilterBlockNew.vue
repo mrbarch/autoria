@@ -15,7 +15,13 @@
               @activeTypeOfTransport="chooseTypeOfTransport"
           />
 
-          <Region/>
+          <div class="filter__block-new-price">
+            <div class="filter__block-new-price-title from-to-title">Регіон</div>
+            <div class="filter__block-new-price-inputs">
+              <Region/>
+            </div>
+          </div>
+
 
           <Mark
               @activeMark="chooseMark"
@@ -24,24 +30,11 @@
           <div class="filter__block-new-price">
             <div class="filter__block-new-price-title from-to-title">Ціна, $</div>
             <div class="filter__block-new-price-inputs">
-              <input class="input" type="number" placeholder="від">
-              <input class="input" type="number" placeholder="до">
+              <Price/>
             </div>
           </div>
 
-          <div class="filter__block-new-model" @click="modelsList = true">
-            <input disabled="disabled" type="text" class="input" id="input-models" placeholder="Модель"
-                   v-model="activeModels"
-                   autocomplete="off">
-            <label for="input-models"></label>
-            <span class="filter__block-new-model-clean" :class="modelsList === true ? 'models-close' : ''"
-                  @click="modelsList = false">×</span>
-            <ul class="filter__block-new-model-list" :class="modelsList === true ? 'active-models' : ''"
-                @mouseleave="modelsList = false">
-              <li @click="chooseModels(model.name)" :key="model.name" v-for="model in models"><a
-                  href="#">{{ model.name }}</a></li>
-            </ul>
-          </div>
+          <Models/>
 
           <button class="filter__block-new-extension">Розширений пошук</button>
           <button class="filter__block-new-search">Пошук</button>
@@ -55,13 +48,17 @@
 import TransportType from "../FilterBlock/TransportType";
 import Region from "../FilterBlock/Region";
 import Mark from "../FilterBlock/Mark";
+import Price from "../FilterBlock/Price";
+import Models from "../FilterBlock/Models";
 
 export default {
   name: 'FilterBlockNew',
   components: {
     TransportType,
     Region,
-    Mark
+    Mark,
+    Price,
+    Models
   },
   data() {
     return {
@@ -138,7 +135,7 @@ select {
   outline: none;
 }
 
-.input {
+.new-filter-block-input {
   border: none;
   border-radius: .5rem;
   padding-left: 0.7rem;
@@ -163,6 +160,7 @@ select {
 .filter {
   position: relative;
   top: -.5rem;
+
   &__block-new {
     height: 23.7rem;
     margin-top: 1.8rem;
@@ -190,7 +188,7 @@ select {
         width: 4.3rem;
         background: transparent;
         color: #ffffff;
-        padding-left: 0!important;
+        padding-left: 0 !important;
         border-radius: .5rem 0 0 .5rem;
       }
 
@@ -240,9 +238,6 @@ select {
         padding-left: 0.5rem;
       }
     }
-
-
-
 
 
     &-brand {
@@ -368,6 +363,7 @@ select {
       display: flex;
       justify-content: space-between;
       width: 28rem;
+      margin-left: 3rem;
 
       &-inputs {
         display: flex;
@@ -390,12 +386,13 @@ select {
       line-height: 1.8rem;
       position: relative;
       top: 4.4rem;
-      left: -31rem;
+      left: -28rem;
       padding-left: 6.8rem;
       background-color: transparent;
       display: flex;
       color: #ffffff;
       align-items: center;
+
       &:hover {
         background-color: #c95c4e;
       }
@@ -416,6 +413,7 @@ select {
       position: relative;
       left: 28rem;
       top: -.5rem;
+
       &:hover {
         background-color: #2ea7f3;
       }

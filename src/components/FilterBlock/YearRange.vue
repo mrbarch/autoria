@@ -2,13 +2,13 @@
   <div>
     <div class="filter__block-year-range-selects">
       <div class="year-range-from-to">
-        <select class="input" name="cars" id="year-range-from" @change="chooseYearFrom">
+        <select class="year-input" name="cars" id="year-range-from" @change="chooseYearFrom">
           <option selected>від</option>
           <option v-for="year in years" :value="year">{{ year }}</option>
         </select>
       </div>
       <div class="year-range-from-to">
-        <select class="input" name="cars" id="year-range-to" @change="chooseYearTo">
+        <select class="year-input" name="cars" id="year-range-to" @change="chooseYearTo">
           <option selected>до</option>
           <option v-for="year in years" :value="year">{{ year }}</option>
         </select>
@@ -46,6 +46,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.year-input {
+  border: none;
+  border-radius: .5rem;
+  padding-left: 0.7rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  background-color: #ffffff;
+  color: #777777;
+  outline: none;
+  width: 28.1rem;
+  height: 3.2rem;
+}
 .filter {
   &__block {
     &-year-range {

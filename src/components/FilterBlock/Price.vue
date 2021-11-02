@@ -5,8 +5,8 @@
         :widthBlock="widthBlockPrice"
         :style="{ width: widthBlock }"
     >
-      <input class="input" id="input-price-from" type="number" placeholder="від" @change="choosePriceFrom">
-      <input class="input" id="input-price-to" type="number" placeholder="до" @change="choosePriceTo">
+      <input class="price-input" id="input-price-from" type="number" placeholder="від" @change="choosePriceFrom">
+      <input class="price-input" id="input-price-to" type="number" placeholder="до" @change="choosePriceTo">
     </div>
   </div>
 </template>
@@ -51,6 +51,19 @@ export default {
       }
     }
   }
+}
+.price-input {
+  border: none;
+  border-radius: .5rem;
+  padding-left: 0.7rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  background-color: #ffffff;
+  color: #777777;
+  outline: none;
+  width: 28.1rem;
+  height: 3.2rem;
+  cursor: text;
 }
 #input-price-from,
 #input-price-to {

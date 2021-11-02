@@ -15,37 +15,45 @@
             <p class="main__info-title-text advanced-search-title">New!</p>
           </div>
           <div class="main__info-description">
-            <p class="advanced-search-subtitle main__info-description-btn-1 main__info-description-btn">Всі авто</p>
-            <p class="advanced-search-subtitle main__info-description-btn-2 main__info-description-btn">Вживані</p>
-            <p class="advanced-search-subtitle main__info-description-btn-3 main__info-description-btn">Нові</p>
-            <p class="advanced-search-subtitle main__info-description-btn-4 main__info-description-btn">Під пригон</p>
+            <label class="advanced-search-subtitle main__info-description-btn"
+                   @click="activeAutoType('allAuto')"
+                   :class="{'radio-btn' : activeType === 'allAuto' }">Всі</label>
+            <label class="advanced-search-subtitle main__info-description-btn"
+                   @click="activeAutoType('usedAuto')"
+                   :class="{'radio-btn' : activeType === 'usedAuto' }">Вживані</label>
+            <label class="advanced-search-subtitle main__info-description-btn"
+                   @click="activeAutoType('newAuto')"
+                   :class="{'radio-btn' : activeType === 'newAuto'}">Нові</label>
+            <label class="advanced-search-subtitle main__info-description-btn"
+                   @click="activeAutoType('fitAuto')"
+                   :class="{'radio-btn' : activeType === 'fitAuto' }">Під пригон</label>
             <br>
           </div>
         </div>
         <div class="main__checkboxes">
           <div class="main__checkbox-vin">
-            <label for="vin">
-              <input class="main__checkbox-vin-input" type="checkbox" id="vin">
-            </label>
-            <div class="main__checkbox-vin-text">
-              <svg class="main__checkbox-vin-img">
-                <path
-                    d="M0.5 3H2L5 0H11L11.75 0.75L8 4.5L6 2.5L4.5 4L8 7.5L13.25 2.25L14 3H15.5C15.7761 3 16 3.22386 16 3.5C16 3.77614 15.7761 4 15.5 4H15V10C15 10.5523 14.5523 11 14 11H13C12.4477 11 12 10.5523 12 10V9H4V10C4 10.5523 3.55228 11 3 11H2C1.44772 11 1 10.5523 1 10V4H0.5C0.223858 4 0 3.77614 0 3.5C0 3.22386 0.223858 3 0.5 3Z"
-                    fill="white"></path>
-              </svg>
-              <p>Перевірений VIN-код</p>
-            </div>
-          </div>
-          <div class="main__checkbox-number">
-            <label for="number">
-              <input class="main__checkbox-number-input checkbox-number" type="checkbox" id="number">
-            </label>
-            <div class="main__checkbox-number-text">
-              <span class="main__checkbox-number-ua">
-                Держ. номер
+            <label for="vin" class="main__checkbox-vin-label">
+              <input class="main__checkbox-vin-checkbox" type="checkbox" id="vin">
+              <span class="main__checkbox-vin-fake"></span>
+              <span class="main__checkbox-vin-block">
+                <svg class="main__checkbox-vin-img">
+                  <path
+                      d="M0.5 3H2L5 0H11L11.75 0.75L8 4.5L6 2.5L4.5 4L8 7.5L13.25 2.25L14 3H15.5C15.7761 3 16 3.22386 16 3.5C16 3.77614 15.7761 4 15.5 4H15V10C15 10.5523 14.5523 11 14 11H13C12.4477 11 12 10.5523 12 10V9H4V10C4 10.5523 3.55228 11 3 11H2C1.44772 11 1 10.5523 1 10V4H0.5C0.223858 4 0 3.77614 0 3.5C0 3.22386 0.223858 3 0.5 3Z"
+                      fill="white"></path>
+                </svg>
+                <span class="main__checkbox-vin-text">Перевірений VIN-код</span>
               </span>
-            </div>
+            </label>
           </div>
+
+          <div class="main__checkbox-number">
+            <label for="number" class="main__checkbox-number-label">
+              <input class="main__checkbox-number-checkbox checkbox-number" type="checkbox" id="number">
+              <span class="main__checkbox-number-fake"></span>
+              <span class="main__checkbox-number-text">Держ. номер</span>
+            </label>
+          </div>
+
         </div>
       </div>
     </div>
@@ -58,13 +66,27 @@
           <div class="type-of-transport__block-dropdown">
             <TransportType
                 @activeTypeOfTransport="chooseTypeOfTransport"
-                :widthTransportTypesInAdvanced="widthTransportTypes"
+                :advancedFormWidth="widthTransportTypes"
                 :widthTransportTypesListInAdvanced="widthTransportTypesList"
             />
           </div>
         </div>
       </div>
     </div>
+
+    <div class="body-types">
+      <div class="container">
+        <div class="body-types__block advanced-search-block">
+          <p class="body-types__title advanced-search-title">
+            Тип кузова
+          </p>
+          <div class="body-types__block-dropdown">
+            <BodyTypes/>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="country">
       <div class="container">
         <div class="country__block advanced-search-block">
@@ -185,6 +207,7 @@ import Models from "../components/FilterBlock/Models";
 import Price from "../components/FilterBlock/Price";
 import PriceSign from "../components/FilterBlock/PriceSign";
 import Cities from "../components/FilterBlock/Cities";
+import BodyTypes from "../components/BodyTypes";
 
 export default {
   name: "advancedSearch",
@@ -198,7 +221,8 @@ export default {
     Models,
     Price,
     PriceSign,
-    Cities
+    Cities,
+    BodyTypes
   },
   data() {
     return {
@@ -207,29 +231,67 @@ export default {
       widthTransportTypes: '21rem !important',
       widthTransportTypesList: '22rem !important',
       widthBlock: '22rem',
+      btn1: true,
+      btn2: false,
+      btn3: false,
+      btn4: false,
+      activeType: '',
     }
   },
-  mounted() {
-    this.GET_COUNTRY_OF_MANUFACTURER()
-    this.SEARCH()
+  async mounted() {
+    await this.GET_COUNTRY_OF_MANUFACTURER()
   },
   methods: {
-    ...mapActions(['GET_COUNTRY_OF_MANUFACTURER', 'GET_MARKS', 'SEARCH']),
+    ...mapActions(['GET_COUNTRY_OF_MANUFACTURER', 'GET_MARKS', 'SEARCH', 'GET_BODY_TYPES']),
+    activeAutoType(type) {
+      this.activeType = type
+    },
     chooseCountryOfManufacturerList(type) {
       this.activeTypeOfTransport = type
     },
     chooseTypeOfTransport(index) {
       this.activeTypeOfTransportIndex = index
       this.GET_MARKS(index)
+      this.GET_BODY_TYPES()
     },
   },
   computed: {
-    ...mapGetters(['countryOfManufacturer', 'marks'])
+    ...mapGetters(['countryOfManufacturer', 'marks', 'bodyTypes'])
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+input[type=radio] {
+  position: absolute;
+  width: .1rem;
+  height: .1rem;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.radio-btn {
+  position: relative;
+  padding: 0.5rem 1rem .5rem 2.6rem !important;
+  background: #f0f2fa;
+  cursor: default;
+  border: 1px solid #79be00 !important;
+  &:before {
+    background: url("./../assets/img/advancedSearch/check.svg") .6rem .6rem no-repeat;
+    background-size: 1.4rem;
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 8rem;
+    height: 3rem;
+    left: 0;
+  }
+
+  &:after {
+    content: " \430\432\442\43E";
+  }
+}
+
 .active-sign {
   display: block !important;
 }
@@ -270,7 +332,7 @@ export default {
   padding-top: 1.7rem;
 
   &__checkboxes {
-    padding: 2rem 0 0 22rem;
+    padding: 2rem 0 0 20.2rem;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -278,17 +340,56 @@ export default {
   }
 
   &__checkbox-vin {
-    display: flex;
-    justify-content: space-between;
     width: 19.5rem;
     height: 2rem;
+    position: relative;
 
-    &-input {
-      width: 1.8rem;
-      height: 1.8rem;
+    &-label {
+      display: flex;
+      height: 2rem;
+      justify-content: space-between;
+      width: 21.4rem;
+    }
+
+    &-label:hover + &-fake {
+      border: 1px solid #000;
+    }
+
+    &-fake {
+      display: inline-block;
+      width: 1.6rem;
+      height: 1.7rem;
+      border: 1px solid #e0e3e4;
+      position: relative;
+      border-radius: 2px;
+
+      &:before {
+        content: "";
+        background: url("../assets/svg/advancedSearch/check-grey.svg") no-repeat;
+        position: absolute;
+        top: 27%;
+        left: 20%;
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        opacity: 0;
+      }
+    }
+
+    &-checkbox:checked + &-fake::before {
+      opacity: 1;
+    }
+
+    &-checkbox {
+      opacity: 0
     }
 
     &-text {
+      margin-right: -0.5 rem;
+      color: #ffffff !important;
+    }
+
+    &-block {
       display: flex;
       justify-content: center;
       font-size: 1.3rem;
@@ -309,30 +410,61 @@ export default {
   }
 
   &__checkbox-number {
-    display: flex;
-    justify-content: space-between;
-    width: 12.5rem;
-    height: 2rem;
+    width: 15.7rem;
+    position: relative;
+    padding-top: 1rem;
 
-    &-input {
-      width: 1.8rem;
-      height: 1.8rem;
+    &-label {
+      display: flex;
+      height: 2rem;
+      justify-content: space-between;
+      width: 14.4rem;
+    }
+
+    &-label:hover + &-fake {
+      border: 1px solid #000;
+    }
+
+    &-fake {
+      display: inline-block;
+      width: 1.6rem;
+      height: 1.7rem;
+      border: 1px solid #e0e3e4;
+      position: relative;
+      border-radius: 2px;
+
+      &:before {
+        content: "";
+        background: url("../assets/svg/advancedSearch/check-grey.svg") no-repeat;
+        position: absolute;
+        top: 27%;
+        left: 20%;
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        opacity: 0;
+      }
+    }
+
+    &-checkbox:checked + &-fake::before {
+      opacity: 1;
+    }
+
+    &-checkbox {
+      opacity: 0
     }
 
     &-text {
+      position: relative;
+      padding-left: 2rem;
       border: 1px solid #256799;
       border-radius: 1.5px;
-      width: 10rem;
+      width: 8rem;
       font-size: 1.3rem;
       line-height: 2rem;
       align-items: center;
       color: #414042;
       display: flex;
-    }
-
-    &-ua {
-      position: relative;
-      padding-left: 2rem;
 
       &:before {
         background-color: #07499d;
@@ -381,34 +513,11 @@ export default {
       &-btn {
         padding: 0.5rem 1rem .5rem 1rem;
         border: 1px solid #e0e3e4;
-      }
-
-      &-btn-1 {
-        position: relative;
-        padding: 0.5rem 1rem .5rem 2.6rem !important;
-
-        &:before {
-          background: url("./../assets/img/advancedSearch/check.svg") .6rem .6rem no-repeat;
-          background-size: 1.4rem;
-          content: '';
-          position: absolute;
-          top: 0;
-          width: 8rem;
-          height: 3rem;
-          left: 0;
+        border-radius: 3px;
+        cursor: pointer;
+        &:hover {
+          border: 1px solid #256799;
         }
-      }
-
-      &-btn-2 {
-
-      }
-
-      &-btn-3 {
-
-      }
-
-      &-btn-4 {
-
       }
     }
   }
@@ -465,6 +574,10 @@ export default {
       }
     }
   }
+}
+
+.body-types {
+  padding-top: 2rem;
 }
 
 #input-transport-type {
@@ -625,6 +738,7 @@ export default {
     width: 14.7rem;
     position: relative;
     padding-top: 1.1rem;
+
     &-label {
       display: flex;
       height: 2rem;
@@ -694,12 +808,14 @@ export default {
       }
     }
   }
+
   &__checkbox-exchange-realty {
     display: flex;
     justify-content: space-between;
     width: 14.7rem;
     position: relative;
     padding-top: 1.5rem;
+
     &-label {
       display: flex;
       height: 2rem;
@@ -769,12 +885,14 @@ export default {
       }
     }
   }
+
   &__checkbox-exchange-auto {
     display: flex;
     justify-content: space-between;
     width: 14.7rem;
     position: relative;
     padding-top: 1.5rem;
+
     &-label {
       display: flex;
       height: 2rem;
@@ -845,18 +963,21 @@ export default {
     }
   }
 }
+
 .advanced-region {
   &__wrapper {
     display: flex;
     justify-content: space-between;
     width: 93.9rem;
   }
+
   &__title {
     font-size: 1.8rem;
     line-height: 2.16rem;
     color: #414042;
     padding-top: 4.5rem;
   }
+
   &__block {
     width: 67.8rem;
     height: 40.2rem;

@@ -86,7 +86,7 @@ export default {
   data() {
     return {
       activeTypeOfTransport: 1,
-      vin: null,
+      vin: 0,
       markValue: null,
       modelValue: null,
       regionValue: null,
@@ -111,7 +111,6 @@ export default {
     },
     setMark(markValue) {
       this.markValue = markValue
-      this.markValueName = markValue
     },
     setModel(modelValue) {
       this.modelValue = modelValue
@@ -132,13 +131,24 @@ export default {
       this.priceToValue = priceTo
     },
     goToList() {
+      const transportTypes = this.transportTypes.find(e => e.value === this.activeTypeOfTransport)
+      const mark = this.marks.find(e => e.value === this.markValue)
+      const models = this.models.find(e => e.value === this.modelValue)
       this.$router.push({
         name: 'search',
         params: {
-          transportType: this.transportTypes.find(e => e.value === this.activeTypeOfTransport).name.toLowerCase(),
-          mark: this.marks.find(e => e.value === this.markValue).name.toLowerCase(),
-          model: this.models.find(e => e.value === this.modelValue).name.toLowerCase()
+          transportType: transportTypes ? transportTypes.name.toLowerCase() : null,
+          mark: mark ? mark.name.toLowerCase() : null,
+          model: models ? models.name.toLowerCase() : null,
         },
+        query: {
+          vin: this.vin,
+          region: this.regionValue,
+          yearFrom: this.yearFromValue,
+          yearTo: this.yearToValue,
+          priceFrom: this.priceFromValue,
+          priceTo: this.priceToValue
+        }
       });
     },
   }

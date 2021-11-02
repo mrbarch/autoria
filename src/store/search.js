@@ -6,11 +6,11 @@ Vue.use(Vuex)
 
 export default ({
     state: {
-        params: []
+        searchResult: []
     },
     mutations: {
         SET_SEARCH_TO_VUEX: (state, payload) => {
-            state.params = payload
+            state.searchResult = payload
         }
     },
     actions: {
@@ -26,8 +26,8 @@ export default ({
         }
     },
     getters: {
-        params(state) {
-            return state.params
+        searchResult(state) {
+            return state.searchResult
         }
     },
     modules: {}

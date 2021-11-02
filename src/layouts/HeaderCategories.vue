@@ -6,7 +6,7 @@
           <div class="menu__list-info">
             <a href="/"><img src="../assets/img/logo.png" alt="logo" class="menu__list-logo"></a>
             <ul class="menu__list-items">
-              <li><a href="#">Вживані авто</a></li>
+              <li><router-link to="/" href="#">Вживані авто</router-link></li>
               <li><router-link to="/newauto">Нові авто</router-link></li>
               <li><a href="#">Новини</a></li>
               <li><a id="dropdown" href="#">Все для авто

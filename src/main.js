@@ -5,8 +5,37 @@ import store from './store'
 import Vuex from "vuex";
 import axios from "axios";
 import './filters/globalFilters'
-import VueI18n from 'vue-i18n'
+import ru from './locales/ru.json'
+import ua from './locales/ua.json'
+
 Vue.use(VueI18n)
+import VueI18n from 'vue-i18n'
+const i18n = new VueI18n({
+    locale: 'ru',
+    pluralizationRules: {
+        'ru': function(choice, choicesLength, orgRule) {
+            if (choice === 0) {
+                return 0
+            }
+
+            const teen = choice > 10 && choice < 20
+            const endsWithOne = choice % 10 === 1
+            if (!teen && endsWithOne) {
+                return 1
+            }
+            if (!teen && choice % 10 >= 2 && choice % 10 <= 4) {
+                return 2
+            }
+
+            return choicesLength < 4 ? 2 : 3
+        }
+    },
+    messages: {
+        ru,
+        ua
+    },
+
+})
 
 axios.defaults.baseURL = 'https://developers.ria.com';
 
@@ -29,6 +58,7 @@ Vue.use(Vuex)
 Vue.config.productionTip = false
 
 new Vue({
+    i18n,
     router,
     store,
     render: h => h(App)

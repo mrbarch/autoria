@@ -1,10 +1,10 @@
+import axios from "axios";
 import Vue from "vue";
 import Vuex from 'vuex'
-import axios from "axios";
 
 Vue.use(Vuex)
 
-const bodyTypes = ({
+export default ({
     state: {
         bodyTypes: []
     },
@@ -14,13 +14,13 @@ const bodyTypes = ({
         }
     },
     actions: {
-        GET_BODY_TYPES({commit}) {
-            axios.get('https://developers.ria.com/auto/categories/1/bodystyles?api_key=NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH', {
-                accept: 'application/json'
+        async GET_BODY_TYPES({commit}, types) {
+            const response = await axios.get(`/auto/categories/${types}/bodystyles`, {
+                params: {
+                    api_key: 'NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH',
+                }
             })
-                .then((response) => {
-                    commit('SET_BODY_TYPES_TO_VUEX', response.data)
-                })
+            commit('SET_BODY_TYPES_TO_VUEX', response.data)
         }
     },
     getters: {
@@ -28,7 +28,5 @@ const bodyTypes = ({
             return state.bodyTypes
         }
     },
-    modules: {}
 })
 
-export default bodyTypes

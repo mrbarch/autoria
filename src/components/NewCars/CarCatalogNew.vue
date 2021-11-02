@@ -7,38 +7,38 @@
             Каталог автомобілей:
           </p>
           <ul class="auto-new__catalog-list">
-            <li @click="toogleNewAutoList"
-                :class="{'active-btn': newAutoActive}">Нові авто
+            <li @click="changeCatalog('newAuto', 'marks')"
+                :class="{'active-btn': catalogCar === 'newAuto'}">Нові авто
             </li>
-            <li @click="toogleNewsList"
-                :class="{'active-btn': newsList}">Новини
+            <li @click="changeCatalog('news', '')"
+                :class="{'active-btn': catalogCar === 'news'}">Новини
             </li>
           </ul>
         </div>
-        <div class="auto-new__sort" v-show="newsShow">
+        <div class="auto-new__sort" v-show="catalogCar === 'newAuto'">
           <p class="auto-new__sort-title">Сортувати:</p>
           <ul class="auto-new__sort-list">
-            <li @click="toogleBrandList"
-                :class="{'active-btn': brandList}">по марці
+            <li @click="changePage('marks')"
+                :class="{'active-btn': sortCar === 'marks'}">по марці
             </li>
-            <li @click="toogleRegionList"
-                :class="{'active-btn': regionList}">по регіону
+            <li @click="changePage('region')"
+                :class="{'active-btn': sortCar === 'region'}">по регіону
             </li>
-            <li @click="toogleTypeList"
-                :class="{'active-btn': typeList}">по типу
+            <li @click="changePage('type')"
+                :class="{'active-btn': sortCar === type}">по типу
             </li>
-            <li @click="tooglePopularList"
-                :class="{'active-btn': popularList}">
+            <li @click="changePage('popularity')"
+                :class="{'active-btn': sortCar === 'popularity'}">
               <nobr>по популярним</nobr>
             </li>
-            <li @click="toogleYearList"
-                :class="{'active-btn': yearList}">по року
+            <li @click="changePage('year')"
+                :class="{'active-btn': sortCar === 'year'}">по року
             </li>
-            <li @click="tooglePriceList"
-                :class="{'active-btn': priceList}">по ціні
+            <li @click="changePage('price')"
+                :class="{'active-btn': sortCar === 'price'}">по ціні
             </li>
-            <li @click="toogleTypeOfPetrolList"
-                :class="{'active-btn': petrolList}">
+            <li @click="changePage('type-fuel')"
+                :class="{'active-btn': sortCar === 'type-fuel'}">
               <nobr>по типу палива</nobr>
             </li>
           </ul>
@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div class="cars" v-show="brandList">
+    <div class="cars" v-show="sortCar === 'marks'">
       <div class="container">
         <div class="cars__list">
           <div class="cars__item" v-for="(auto, index) in CarCatalogNewAuto" :key="index">
@@ -55,13 +55,13 @@
             </a>
           </div>
           <div class="cars__show">
-            <p @click="showAllBrands">Дивитись всі 48 марок→</p>
+            <p>Дивитись всі 48 марок→</p>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="cars" v-show="regionList">
+    <div class="cars" v-show="sortCar === 'region'">
       <div class="container">
         <div class="cars__list-region">
           <div class="cars__item" v-for="(region, index) in CarCatalogNewRegion" :key="index">
@@ -73,7 +73,7 @@
       </div>
     </div>
 
-    <div class="cars" v-show="typeList">
+    <div class="cars" v-show="sortCar === 'type'">
       <div class="container">
         <div class="cars__list-type">
           <div class="cars__item cars__item-type" v-for="(type, index) in CarCatalogNewType" :key="index">
@@ -85,7 +85,7 @@
       </div>
     </div>
 
-    <div class="cars" v-show="popularList">
+    <div class="cars" v-show="sortCar === 'popularity'">
       <div class="container">
         <div class="cars__list cars__list-popular">
           <div class="cars__item cars__item-popular" v-for="(popularCars, index) in CarCatalogNewPopular" :key="index">
@@ -97,7 +97,7 @@
       </div>
     </div>
 
-    <div class="cars" v-show="yearList">
+    <div class="cars" v-show="sortCar === 'year'">
       <div class="container">
         <div class="cars__list cars__list-year">
           <div class="cars__item cars__item-year" v-for="(year, index) in CarCatalogNewYear" :key="index">
@@ -109,7 +109,7 @@
       </div>
     </div>
 
-    <div class="cars" v-show="priceList">
+    <div class="cars" v-show="sortCar === 'price'">
       <div class="container">
         <div class="cars__list cars__list-price">
           <div class="cars__item cars__item-price" v-for="(price, index) in CarCatalogNewPrice" :key="index">
@@ -121,7 +121,7 @@
       </div>
     </div>
 
-    <div class="cars" v-show="petrolList">
+    <div class="cars" v-show="sortCar === 'type-fuel'">
       <div class="container">
         <div class="cars__list cars__list-petrol">
           <div class="cars__item cars__item-petrol" v-for="(petrolType, index) in CarCatalogNewTypePetrol" :key="index">
@@ -133,7 +133,7 @@
       </div>
     </div>
 
-    <div class="news" v-show="newsList">
+    <div class="news" v-show="catalogCar === 'news'">
       <div class="container">
         <div class="news__list news__list-items">
           <div class="news__item" v-for="(carNews, index) in CarCatalogNewNews" :key="index">
@@ -158,17 +158,8 @@ export default {
   name: "CarCatalogNew",
   data() {
     return {
-      newsList: false,
-      brandList: true,
-      regionList: false,
-      typeList: false,
-      popularList: false,
-      yearList: false,
-      priceList: false,
-      petrolList: false,
-      newsShow: true,
-      newAutoActive: true,
-      newArray: this.CarCatalogNewAuto
+      sortCar: 'marks',
+      catalogCar: 'newAuto'
     }
   },
   computed: {
@@ -185,100 +176,13 @@ export default {
     ]),
   },
   methods: {
-    showAllBrands() {
-      this.CarCatalogNewAuto = [...this.CarCatalogNewAllBrands]
-      console.log(this.newArray)
+    changePage(page) {
+      this.sortCar = page
     },
-    toogleNewAutoList() {
-      this.brandList = true
-      this.newsList = false
-      this.regionList = false
-      this.typeList = false
-      this.newsShow = true
-      this.newAutoActive = true
+    changeCatalog(catalog, page) {
+      this.catalogCar = catalog
+      this.sortCar = page
     },
-    toogleNewsList() {
-      this.newsList = true
-      this.newsShow = false
-      this.brandList = false
-      this.regionList = false
-      this.typeList = false
-      this.popularList = false
-      this.yearList = false
-      this.priceList = false
-      this.petrolList = false
-      this.newAutoActive = false
-    },
-    toogleRegionList() {
-      this.newAutoActive = true
-      this.regionList = true
-      this.brandList = false
-      this.typeList = false
-      this.popularList = false
-      this.yearList = false
-      this.priceList = false
-      this.petrolList = false
-    },
-    toogleBrandList() {
-      this.newAutoActive = true
-      this.brandList = true
-      this.regionList = false
-      this.typeList = false
-      this.popularList = false
-      this.yearList = false
-      this.priceList = false
-      this.petrolList = false
-    },
-    toogleTypeList() {
-      this.newAutoActive = true
-      this.brandList = false
-      this.regionList = false
-      this.typeList = true
-      this.popularList = false
-      this.yearList = false
-      this.priceList = false
-      this.petrolList = false
-    },
-    tooglePopularList() {
-      this.newAutoActive = true
-      this.brandList = false
-      this.regionList = false
-      this.popularList = true
-      this.typeList = false
-      this.priceList = false
-      this.yearList = false
-      this.petrolList = false
-    },
-    toogleYearList() {
-      this.newAutoActive = true
-      this.brandList = false
-      this.regionList = false
-      this.popularList = false
-      this.typeList = false
-      this.yearList = true
-      this.priceList = false
-      this.petrolList = false
-    },
-    tooglePriceList() {
-      this.newAutoActive = true
-      this.brandList = false
-      this.regionList = false
-      this.popularList = false
-      this.typeList = false
-      this.yearList = false
-      this.priceList = true
-      this.petrolList = false
-    },
-    toogleTypeOfPetrolList() {
-      this.newAutoActive = true
-      this.brandList = false
-      this.regionList = false
-      this.popularList = false
-      this.typeList = false
-      this.yearList = false
-      this.priceList = false
-      this.petrolList = true
-    }
   }
 }
 </script>
@@ -581,6 +485,7 @@ export default {
     margin-bottom: 1rem;
     width: 29.6rem;
     justify-content: space-between;
+
     &-region {
       font-size: 1.3rem;
       line-height: 1.56rem;
@@ -593,6 +498,7 @@ export default {
       width: 29.6rem;
       justify-content: space-between;
     }
+
     a {
       text-decoration: none;
       color: #256799;
@@ -636,5 +542,9 @@ export default {
       background: #fff;
     }
   }
+}
+
+nobr {
+  color: #256799;
 }
 </style>

@@ -8,6 +8,7 @@ import CarCatalogNew from "./carCatalogNew";
 import countryOfManufacturer from "./countryOfManufacturer";
 import search from "./search";
 import regions from "./regions";
+import bodyTypes from "./bodyTypes";
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
         CarCatalogNew,
         countryOfManufacturer,
         search,
-        regions
+        regions,
+        bodyTypes
     },
 })

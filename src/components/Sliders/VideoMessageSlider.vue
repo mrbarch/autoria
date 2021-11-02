@@ -145,7 +145,7 @@ export default {
 
       &-slogan {
         font-size: 1.8rem;
-        color: #5f4f40;
+        color: #414042;
         line-height: 2rem;
       }
 

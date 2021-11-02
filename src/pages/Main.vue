@@ -403,14 +403,14 @@ export default {
     }
 
     &-last {
-      color: #5f4f40;
+      color: #414042;
       font-size: 1.6rem;
       line-height: 1.7rem;
       width: 13.3rem;
     }
 
     &-text {
-      color: #5f4f40;
+      color: #414042;
       font-size: 1.6rem;
       line-height: 1.7rem;
     }

@@ -15,8 +15,10 @@ export default ({
     },
     actions: {
         async GET_MARKS({commit}, activeTypeOfTransportToStore) {
-            const response = await axios.get(`/auto/categories/${activeTypeOfTransportToStore}/marks?api_key=NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH`, {
-                accept: 'application/json'
+            const response = await axios.get(`/auto/categories/${activeTypeOfTransportToStore}/marks`, {
+                params: {
+                    api_key: 'NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH',
+                }
             })
             commit('SET_MARKS_TO_VUEX', response.data)
         }
@@ -26,6 +28,5 @@ export default ({
             return state.marks
         }
     },
-    modules: {}
 })
 

@@ -1,15 +1,16 @@
 <template>
   <div>
-    <div class="filter__block-type">
+    <div class="type">
       <select
-          class="filter__block-type transport-type-input"
+          :style="{width: this.advancedFormWidth}"
+          class="type transport-type-input"
           v-model="activeTypeOfTransportIndex"
           @change="chooseTypeOfTransport($event.target.selectedIndex)"
       >
-        <option class="filter__block-type-list" value="0">
+        <option class="type-list" value="0">
           Будь-який
         </option>
-        <option class="filter__block-type-list"
+        <option class="type-list"
                 v-for="(transportType, value) in transportTypes"
                 :value="value+1"
         >
@@ -29,12 +30,13 @@ export default {
     return {
       activeTypeOfTransportIndex: 1,
       transportTypesList: false,
-      activeTypeOfTransportName: ''
+      activeTypeOfTransportName: '',
     }
   },
   mounted() {
     this.GET_TRANSPORT_TYPES()
   },
+  props: ['advancedFormWidth'],
   computed: {
     ...mapGetters([
       'transportTypes'
@@ -57,54 +59,51 @@ export default {
   width: 21rem !important;
 }
 
-.filter {
-  &__block {
-    &-type {
-      position: relative;
+.type {
+  position: relative;
 
-      &:after {
-        content: '';
-        position: absolute;
-        border: .55rem solid transparent;
-        border-top: .5rem solid #db5c4c;
-        right: 1rem;
-        top: 1.5rem;
-      }
+  &:after {
+    content: '';
+    position: absolute;
+    border: .55rem solid transparent;
+    border-top: .5rem solid #db5c4c;
+    right: 1rem;
+    top: 1.5rem;
+  }
 
-      &-list {
-        background: #fff;
-        border: 1px solid #3498db;
-        width: 28.1rem !important;
-        max-height: 19rem;
-        margin: 0;
-        overflow-y: auto;
-        overflow-x: hidden;
-        position: absolute;
-        z-index: 3;
-        -webkit-overflow-scrolling: touch;
-        box-sizing: border-box;
-        padding: .5rem;
-        color: #414042 !important;
+  &-list {
+    background: #fff;
+    border: 1px solid #3498db;
+    width: 28.1rem !important;
+    max-height: 19rem;
+    margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    z-index: 3;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    padding: .5rem;
+    color: #414042 !important;
 
-        &-item {
-          font-size: 1.6rem;
-          line-height: 2rem;
-          background-color: #ffffff;
-          display: flex;
-          flex-direction: column;
-
-          a {
-            font-weight: 200 !important;
-          }
-        }
-      }
-    }
-
-    &-type option {
+    &-item {
+      font-size: 1.6rem;
+      line-height: 2rem;
       background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+
+      a {
+        font-weight: 200 !important;
+      }
     }
   }
 }
+
+.type option {
+  background-color: #ffffff;
+}
+
 
 .transport-type-input {
   border: none;

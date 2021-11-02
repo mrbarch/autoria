@@ -38,7 +38,7 @@
                 </a>
               </div>
               <em class="used__cars-row-count">
-                199 988
+                {{  }}
               </em>
             </div>
 
@@ -162,8 +162,7 @@
                 16
               </em>
             </div>
-          </div>
-          <div class="used__cars-column">
+
             <div class="used__cars-row">
               <div class="used__cars-row-title">
                 <a href="#">
@@ -296,9 +295,8 @@
                 830
               </em>
             </div>
-          </div>
 
-          <div class="used__cars-column">
+
             <div class="used__cars-row">
               <div class="used__cars-row-title">
                 <a href="#">
@@ -430,9 +428,6 @@
                 6 106
               </em>
             </div>
-          </div>
-
-          <div class="used__cars-column">
             <div class="used__cars-row">
               <div class="used__cars-row-title">
                 <a href="#">
@@ -573,8 +568,20 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
+
 export default {
-  name: "CarCatalog"
+  name: "CarCatalog",
+  methods: {
+    ...mapActions(['SEARCH'])
+  },
+  computed: {
+    ...mapGetters(['searchResult'])
+  },
+  created() {
+    this.SEARCH()
+    console.log(this.searchResult)
+  }
 }
 </script>
 
@@ -670,13 +677,14 @@ export default {
 
 .used__cars {
   &-items {
-    display: flex;
-    justify-content: space-between;
     padding-top: 0.8rem;
   }
 
   &-column {
-    width: 22rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 31rem;
   }
 
   &-row {

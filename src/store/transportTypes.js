@@ -11,8 +11,10 @@ export default ({
     },
     actions: {
         async GET_TRANSPORT_TYPES({commit}) {
-            const response = await axios.get('/auto/categories/?api_key=NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH', {
-                accept: 'application/json'
+            const response = await axios.get('/auto/categories/', {
+                params: {
+                    api_key: 'NNu0QGSKlc1KrqulqK9MjxaW4veh8votIz3tDrdH',
+                }
             })
             commit('SET_TRANSPORT_TYPES_TO_VUEX', response.data)
         }

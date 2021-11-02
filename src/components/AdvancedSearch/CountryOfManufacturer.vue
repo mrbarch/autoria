@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="country-of-manufacturer" @click="openCountryOfManufacturerList">
-      <input disabled="disabled" type="text" class="input input-country-of-manufacturer" id="input-country-of-manufacturer"
+      <input disabled="disabled" type="text" class="input-country-of-manufacturer" id="input-country-of-manufacturer"
              placeholder="Оберіть країну"
              v-model="activeCountryOfManufacturer">
       <label for="input-country-of-manufacturer"></label>
       <ul class="country-of-manufacturer__list"
           :class="countryOfManufacturerList === true ? 'active-country-of-manufacturer' : ''">
-        <li class="country-of-manufacturer__list-item" @click="chooseCountryOfManufacturer('Оберіть країну')"><a href="#">Оберіть країну</a></li>
+        <li class="country-of-manufacturer__list-item" @click="chooseCountryOfManufacturer('Оберіть країну')"><a
+            href="#">Оберіть країну</a></li>
         <li class="country-of-manufacturer__list-item" :key="index"
             v-for="(country, index) in this.countryOfManufacturer"
             @click="chooseCountryOfManufacturer(country.name, index + 1)"><a
@@ -33,7 +34,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "countryOfManufacturer"
+      "countryOfManufacturer",
     ])
   },
   mounted() {
@@ -56,15 +57,27 @@ export default {
 .active-country-of-manufacturer {
   display: block !important;
 }
+
 .input-country-of-manufacturer {
-  width: 21rem!important;
+  width: 21rem !important;
+  border: none;
+  border-radius: .5rem;
+  padding-left: 0.7rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  background-color: #ffffff;
+  color: #777777;
+  outline: none;
+  height: 3.2rem;
 }
+
 .country-of-manufacturer {
   width: 22rem;
   position: relative;
   border: 1px solid #e0e3e4;
   border-radius: 3px;
   height: 3.2rem;
+
   &:before {
     content: "";
     position: absolute;
@@ -73,11 +86,13 @@ export default {
     left: 19.8rem;
     top: 1.3rem;
   }
+
   &__list {
     background: #fff;
     border: 1px solid #3498db;
     width: 22.1rem;
     max-height: 19rem;
+    color: #777777 !important;
     margin: 0;
     overflow-y: auto;
     overflow-x: hidden;
